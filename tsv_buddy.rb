@@ -6,13 +6,30 @@ module TsvBuddy
   # arguments: tsv - a String in TSV format
   # returns: nothing
   def take_tsv(tsv)
-
+    @data = []
+    tsv.split("\n")[1..].each do |row|
+      row = row.strip.split("\t")
+      @data.append(
+        'date' => row[0],
+        'student_id' => row[1],
+        'languages' => row[2],
+        'best_language' => row[3],
+        'app_experience' => row[4],
+        'tech_experience' => row[5]
+      )
+    end
   end
 
   # Converts @data into tsv string
   # arguments: none
   # returns: String in TSV format
   def to_tsv
+    result = "date\tstudent_id\tlanguages\tbest_language\tapp_experience\ttech_experience\n"
+    @data.each do |record|
+      result += record.values.join("\t")
+      result += "\n"
+    end
 
+    result
   end
 end
