@@ -7,15 +7,7 @@ module TsvBuddy
   # returns: nothing
   def take_tsv(tsv)
     @data = tsv.split("\n")[1..].map do |row|
-      row = row.strip.split("\t")
-      {
-        'date' => row[0],
-        'student_id' => row[1],
-        'languages' => row[2],
-        'best_language' => row[3],
-        'app_experience' => row[4],
-        'tech_experience' => row[5]
-      }
+      tsv_row_to_hash(row)
     end
   end
 
@@ -27,7 +19,18 @@ module TsvBuddy
     @data.each do |record|
       result += "#{record.values.join("\t")}\n"
     end
-
     result
   end
+end
+
+def tsv_row_to_hash(row)
+  row = row.strip.split("\t")
+  {
+    'date' => row[0],
+    'student_id' => row[1],
+    'languages' => row[2],
+    'best_language' => row[3],
+    'app_experience' => row[4],
+    'tech_experience' => row[5]
+  }
 end
